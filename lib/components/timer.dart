@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pomodoro/components/timer_button.dart';
+import 'package:pomodoro/store/pomodoro_store.dart';
+import 'package:provider/provider.dart';
 
 class Timer extends StatelessWidget {
   const Timer({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final store = Provider.of<PomodoroStore>(context);
+
     return Container(
       color: Colors.red,
       child: Column(
@@ -21,32 +26,43 @@ class Timer extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Text(
-            '25:00',
+            '${store.minutes.toString().padLeft(2, '0')}:${store.seconds.toString().padLeft(2, '0')}',
             style: GoogleFonts.oxygen(
               fontSize: 120,
               color: Colors.white,
             ),
           ),
           const SizedBox(height: 32),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              TimerButton(
-                title: 'START',
-                icon: Icons.play_arrow,
-              ),
-              SizedBox(width: 10),
-              //TimerButton(
-              //title: 'STOP',
-              //icon: Icons.stop,
-              //),
-              SizedBox(width: 10),
-              TimerButton(
-                title: 'REFRESH',
-                icon: Icons.refresh,
-              ),
-            ],
-          )
+          Observer(
+            builder: (context) => Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                if (!store.isRunning)
+                  Padding(
+                    padding: const EdgeInsets.only(right: 20),
+                    child: TimerButton(
+                      title: 'START',
+                      icon: Icons.play_arrow,
+                      action: store.startTimer,
+                    ),
+                  ),
+                if (store.isRunning)
+                  Padding(
+                    padding: const EdgeInsets.only(right: 20),
+                    child: TimerButton(
+                      title: 'STOP',
+                      icon: Icons.stop,
+                      action: store.stopTimer,
+                    ),
+                  ),
+                TimerButton(
+                  title: 'REFRESH',
+                  icon: Icons.refresh,
+                  action: store.refreshTimer,
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );

@@ -9,6 +9,51 @@ part of 'pomodoro_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$PomodoroStore on _PomodoroStore, Store {
+  final _$minutesAtom = Atom(name: '_PomodoroStore.minutes');
+
+  @override
+  int get minutes {
+    _$minutesAtom.reportRead();
+    return super.minutes;
+  }
+
+  @override
+  set minutes(int value) {
+    _$minutesAtom.reportWrite(value, super.minutes, () {
+      super.minutes = value;
+    });
+  }
+
+  final _$secondsAtom = Atom(name: '_PomodoroStore.seconds');
+
+  @override
+  int get seconds {
+    _$secondsAtom.reportRead();
+    return super.seconds;
+  }
+
+  @override
+  set seconds(int value) {
+    _$secondsAtom.reportWrite(value, super.seconds, () {
+      super.seconds = value;
+    });
+  }
+
+  final _$isRunningAtom = Atom(name: '_PomodoroStore.isRunning');
+
+  @override
+  bool get isRunning {
+    _$isRunningAtom.reportRead();
+    return super.isRunning;
+  }
+
+  @override
+  set isRunning(bool value) {
+    _$isRunningAtom.reportWrite(value, super.isRunning, () {
+      super.isRunning = value;
+    });
+  }
+
   final _$workTimerAtom = Atom(name: '_PomodoroStore.workTimer');
 
   @override
@@ -41,6 +86,39 @@ mixin _$PomodoroStore on _PomodoroStore, Store {
 
   final _$_PomodoroStoreActionController =
       ActionController(name: '_PomodoroStore');
+
+  @override
+  void startTimer() {
+    final _$actionInfo = _$_PomodoroStoreActionController.startAction(
+        name: '_PomodoroStore.startTimer');
+    try {
+      return super.startTimer();
+    } finally {
+      _$_PomodoroStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void stopTimer() {
+    final _$actionInfo = _$_PomodoroStoreActionController.startAction(
+        name: '_PomodoroStore.stopTimer');
+    try {
+      return super.stopTimer();
+    } finally {
+      _$_PomodoroStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void refreshTimer() {
+    final _$actionInfo = _$_PomodoroStoreActionController.startAction(
+        name: '_PomodoroStore.refreshTimer');
+    try {
+      return super.refreshTimer();
+    } finally {
+      _$_PomodoroStoreActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void incrementWorkTimer() {
@@ -89,6 +167,9 @@ mixin _$PomodoroStore on _PomodoroStore, Store {
   @override
   String toString() {
     return '''
+minutes: ${minutes},
+seconds: ${seconds},
+isRunning: ${isRunning},
 workTimer: ${workTimer},
 restTime: ${restTime}
     ''';
