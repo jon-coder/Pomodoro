@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         Provider<PomodoroStore>(
-          create: (_) => PomodoroStore(),
+          create: (context) => PomodoroStore(),
         )
       ],
       child: MaterialApp(
