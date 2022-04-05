@@ -11,7 +11,9 @@ class Pomodoro extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Expanded(child: Timer()),
+          const Expanded(
+            child: Timer(),
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 40.0),
             child: Row(

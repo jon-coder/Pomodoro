@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:pomodoro/pages/pomodoro.dart';
 
 void main() {
