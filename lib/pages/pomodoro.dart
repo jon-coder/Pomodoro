@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:pomodoro/components/time_in.dart';
 import 'package:pomodoro/components/timer.dart';
+import 'package:pomodoro/store/pomodoro_store.dart';
+import 'package:provider/provider.dart';
 
 class Pomodoro extends StatelessWidget {
   const Pomodoro({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final store = Provider.of<PomodoroStore>(context);
+
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -18,9 +22,15 @@ class Pomodoro extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 40.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: const [
-                TimeIn(title: 'Work', value: 30),
-                TimeIn(title: 'Rest', value: 7),
+              children: [
+                TimeIn(
+                  title: 'Work',
+                  value: store.workTimer,
+                ),
+                TimeIn(
+                  title: 'Rest',
+                  value: store.restTime,
+                ),
               ],
             ),
           ),
