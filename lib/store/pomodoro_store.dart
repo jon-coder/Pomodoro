@@ -39,16 +39,19 @@ abstract class _PomodoroStore with Store {
   @action
   void startTimer() {
     isRunning = true;
-    cron = Timer.periodic(const Duration(milliseconds: 30), (timer) {
-      if (minutes == 0 && seconds == 0) {
-        _changeBreakType();
-      } else if (seconds == 0) {
-        seconds = 59;
-        minutes--;
-      } else {
-        seconds--;
-      }
-    });
+    cron = Timer.periodic(
+      const Duration(seconds: 1),
+      (timer) {
+        if (minutes == 0 && seconds == 0) {
+          _changeBreakType();
+        } else if (seconds == 0) {
+          seconds = 59;
+          minutes--;
+        } else {
+          seconds--;
+        }
+      },
+    );
   }
 
   @action
@@ -60,19 +63,38 @@ abstract class _PomodoroStore with Store {
   @action
   void refreshTimer() {
     stopTimer();
+    minutes = isWorking() ? workTime : restTime;
+    seconds = 0;
   }
 
   @observable
   int workTime = 2;
   @action
-  void incrementWorkTimer() => workTime++;
+  void incrementWorkTimer() {
+    workTime++;
+    isWorking() ? refreshTimer() : null;
+  }
+
   @action
-  void decrementWorkTimer() => workTime--;
+  void decrementWorkTimer() {
+    workTime--;
+    workTime < 0 ? workTime = 0 : null;
+    isWorking() ? refreshTimer() : null;
+  }
 
   @observable
   int restTime = 1;
   @action
-  void incrementRestTimer() => restTime++;
+  void incrementRestTimer() {
+    restTime++;
+    restTime < 0 ? restTime = 0 : null;
+    isResting() ? refreshTimer() : null;
+  }
+
   @action
-  void decrementRestTimer() => restTime--;
+  void decrementRestTimer() {
+    restTime--;
+    restTime < 0 ? restTime = 0 : null;
+    isResting() ? refreshTimer() : null;
+  }
 }
