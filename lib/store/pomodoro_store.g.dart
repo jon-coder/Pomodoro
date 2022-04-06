@@ -9,6 +9,21 @@ part of 'pomodoro_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$PomodoroStore on _PomodoroStore, Store {
+  final _$breakTypeAtom = Atom(name: '_PomodoroStore.breakType');
+
+  @override
+  BreakTipe get breakType {
+    _$breakTypeAtom.reportRead();
+    return super.breakType;
+  }
+
+  @override
+  set breakType(BreakTipe value) {
+    _$breakTypeAtom.reportWrite(value, super.breakType, () {
+      super.breakType = value;
+    });
+  }
+
   final _$minutesAtom = Atom(name: '_PomodoroStore.minutes');
 
   @override
@@ -54,18 +69,18 @@ mixin _$PomodoroStore on _PomodoroStore, Store {
     });
   }
 
-  final _$workTimerAtom = Atom(name: '_PomodoroStore.workTimer');
+  final _$workTimeAtom = Atom(name: '_PomodoroStore.workTime');
 
   @override
-  int get workTimer {
-    _$workTimerAtom.reportRead();
-    return super.workTimer;
+  int get workTime {
+    _$workTimeAtom.reportRead();
+    return super.workTime;
   }
 
   @override
-  set workTimer(int value) {
-    _$workTimerAtom.reportWrite(value, super.workTimer, () {
-      super.workTimer = value;
+  set workTime(int value) {
+    _$workTimeAtom.reportWrite(value, super.workTime, () {
+      super.workTime = value;
     });
   }
 
@@ -167,10 +182,11 @@ mixin _$PomodoroStore on _PomodoroStore, Store {
   @override
   String toString() {
     return '''
+breakType: ${breakType},
 minutes: ${minutes},
 seconds: ${seconds},
 isRunning: ${isRunning},
-workTimer: ${workTimer},
+workTime: ${workTime},
 restTime: ${restTime}
     ''';
   }

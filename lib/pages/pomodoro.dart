@@ -27,7 +27,7 @@ class Pomodoro extends StatelessWidget {
                 children: [
                   TimeIn(
                     title: 'Work',
-                    value: store.workTimer,
+                    value: store.workTime,
                     dec: store.decrementWorkTimer,
                     inc: store.incrementWorkTimer,
                   ),

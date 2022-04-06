@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:mobx/mobx.dart';
 
 part 'pomodoro_store.g.dart';
@@ -10,11 +12,22 @@ enum BreakTipe {
 }
 
 abstract class _PomodoroStore with Store {
-  @observable
-  BreakTipe breakType = BreakTipe.rest;
+  Timer? cron;
 
+  @observable
+  BreakTipe breakType = BreakTipe.work;
   bool isWorking() => breakType == BreakTipe.work;
   bool isResting() => breakType == BreakTipe.rest;
+  void _changeBreakType() {
+    if (isWorking()) {
+      breakType = BreakTipe.rest;
+      minutes = restTime;
+    } else {
+      breakType = BreakTipe.work;
+      minutes = workTime;
+    }
+    seconds = 0;
+  }
 
   @observable
   int minutes = 2;
@@ -26,24 +39,35 @@ abstract class _PomodoroStore with Store {
   @action
   void startTimer() {
     isRunning = true;
+    cron = Timer.periodic(const Duration(milliseconds: 30), (timer) {
+      if (minutes == 0 && seconds == 0) {
+        _changeBreakType();
+      } else if (seconds == 0) {
+        seconds = 59;
+        minutes--;
+      } else {
+        seconds--;
+      }
+    });
   }
 
   @action
   void stopTimer() {
     isRunning = false;
+    cron?.cancel();
   }
 
   @action
   void refreshTimer() {
-    isRunning = false;
+    stopTimer();
   }
 
   @observable
-  int workTimer = 2;
+  int workTime = 2;
   @action
-  void incrementWorkTimer() => workTimer++;
+  void incrementWorkTimer() => workTime++;
   @action
-  void decrementWorkTimer() => workTimer--;
+  void decrementWorkTimer() => workTime--;
 
   @observable
   int restTime = 1;
