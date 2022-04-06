@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:pomodoro/pages/pomodoro.dart';
-import 'package:pomodoro/store/pomodoro_store.dart';
 import 'package:provider/provider.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+import '../pages/pomodoro.dart';
+import '../store/store.dart';
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+void main() => runApp(const PomodoroApp());
+
+class PomodoroApp extends StatelessWidget {
+  const PomodoroApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,14 +15,11 @@ class MyApp extends StatelessWidget {
       providers: [
         Provider<PomodoroStore>(
           create: (context) => PomodoroStore(),
-        )
-      ],
-      child: MaterialApp(
-        title: 'Pomodoro',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
         ),
-        home: const Pomodoro(),
+      ],
+      child: const MaterialApp(
+        title: 'Pomodoro',
+        home: Pomodoro(),
       ),
     );
   }

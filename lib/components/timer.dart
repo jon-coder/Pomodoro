@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pomodoro/components/timer_button.dart';
-import 'package:pomodoro/store/pomodoro_store.dart';
 import 'package:provider/provider.dart';
+
+import '../components/components.dart';
+import '../store/store.dart';
 
 class Timer extends StatelessWidget {
   const Timer({Key? key}) : super(key: key);

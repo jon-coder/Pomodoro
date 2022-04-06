@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:pomodoro/components/time_in.dart';
-import 'package:pomodoro/components/timer.dart';
-import 'package:pomodoro/store/pomodoro_store.dart';
 import 'package:provider/provider.dart';
+
+import '../components/components.dart';
+import '../store/store.dart';
 
 class Pomodoro extends StatelessWidget {
   const Pomodoro({Key? key}) : super(key: key);

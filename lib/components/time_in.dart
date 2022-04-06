@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pomodoro/store/pomodoro_store.dart';
 import 'package:provider/provider.dart';
+
+import '../store/store.dart';
 
 class TimeIn extends StatelessWidget {
   final String title;
