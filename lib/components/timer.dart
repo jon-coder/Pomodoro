@@ -13,12 +13,12 @@ class Timer extends StatelessWidget {
     final store = Provider.of<PomodoroStore>(context);
 
     return Container(
-      color: Colors.red,
+      color: store.isWorking() ? Colors.red : Colors.green,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            'Time to work!',
+            store.isWorking() ? 'Time to work!' : 'Time to rest :)',
             style: GoogleFonts.oxygen(
               fontSize: 48,
               color: Colors.white,

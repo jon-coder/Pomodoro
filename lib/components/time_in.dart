@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pomodoro/store/pomodoro_store.dart';
+import 'package:provider/provider.dart';
 
 class TimeIn extends StatelessWidget {
   final String title;
@@ -17,6 +19,8 @@ class TimeIn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final store = Provider.of<PomodoroStore>(context);
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -36,7 +40,7 @@ class TimeIn extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 shape: const CircleBorder(),
                 padding: const EdgeInsets.all(16),
-                primary: Colors.red,
+                primary: store.isWorking() ? Colors.red : Colors.green,
               ),
               child: const Icon(
                 Icons.arrow_downward,
@@ -53,7 +57,7 @@ class TimeIn extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 shape: const CircleBorder(),
                 padding: const EdgeInsets.all(16),
-                primary: Colors.red,
+                primary: store.isWorking() ? Colors.red : Colors.green,
               ),
               child: const Icon(
                 Icons.arrow_upward,

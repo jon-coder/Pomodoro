@@ -4,7 +4,18 @@ part 'pomodoro_store.g.dart';
 
 class PomodoroStore = _PomodoroStore with _$PomodoroStore;
 
+enum BreakTipe {
+  work,
+  rest,
+}
+
 abstract class _PomodoroStore with Store {
+  @observable
+  BreakTipe breakType = BreakTipe.rest;
+
+  bool isWorking() => breakType == BreakTipe.work;
+  bool isResting() => breakType == BreakTipe.rest;
+
   @observable
   int minutes = 2;
   @observable
